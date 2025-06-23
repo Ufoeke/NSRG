@@ -1,0 +1,77 @@
+{
+	"meta": {
+		"generatedAt": "2025-06-23T10:47:28.058Z",
+		"tasksAnalyzed": 8,
+		"totalTasks": 16,
+		"analysisCount": 8,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": true
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 7,
+			"taskTitle": "Intelligent Input Engine",
+			"complexityScore": 10,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Break down the Intelligent Input Engine into subtasks focusing on AI model development, data processing pipelines, real-time validation, user interface integration, cross-service learning implementation, performance optimization, testing strategies, and deployment considerations.",
+			"reasoning": "This task is highly complex due to the integration of AI-powered features like autocomplete, pattern recognition, and cross-service learning. It involves multiple technical domains (machine learning, real-time processing, UI/UX) and has extensive dependencies, requiring a significant number of subtasks to manage the scope effectively."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Universal Search & History System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose the Universal Search & History System into subtasks covering search engine architecture, indexing strategies, real-time search implementation, advanced filtering mechanisms, history tracking and audit trails, and export functionality development.",
+			"reasoning": "This task involves building a comprehensive search system with multiple features like instant search and audit trails. While not as complex as AI systems, it requires careful design for performance and usability across diverse data types, justifying a moderate number of subtasks."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Copy & Template Management System",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Split the Copy & Template Management System into subtasks addressing request duplication features, template creation and categorization, version control implementation, sharing and approval workflows, and usage analytics integration.",
+			"reasoning": "This task is moderately complex due to the need for version control and collaborative features like sharing and approvals. The scope is narrower than AI or search systems, but still requires multiple subtasks to handle the diverse functionalities effectively."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "ServiceNow Output Engine",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Divide the ServiceNow Output Engine into subtasks focusing on real-time preview development, template customization features, multi-format output generation, field mapping logic, change request integration, and testing across output types.",
+			"reasoning": "This task is complex due to the need for real-time previews, customizable templates, and integration with external systems like ServiceNow. It requires a balanced number of subtasks to address the technical challenges of dynamic output generation and integration."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "Batch Operations & Bulk Management",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Segment the Batch Operations & Bulk Management task into subtasks covering batch operation framework design, multi-device configuration application, progress tracking mechanisms, error handling strategies, and bulk export functionalities.",
+			"reasoning": "This task involves handling large-scale operations with potential for errors and performance issues, making it moderately complex. It requires subtasks to manage the intricacies of batch processing, error recovery, and user feedback mechanisms."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Data Migration & Integration",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Organize the Data Migration & Integration task into subtasks focusing on data assessment and mapping, migration script development, data validation processes, integration pattern establishment, backup strategy implementation, and post-migration verification.",
+			"reasoning": "This task is complex due to the critical nature of data integrity during migration and the need for robust integration patterns. Multiple subtasks are necessary to ensure thorough planning, execution, and validation of data handling processes."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Performance Optimization & Caching",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break the Performance Optimization & Caching task into subtasks addressing database query optimization, caching strategy implementation, frontend performance enhancements, lazy loading techniques, and performance monitoring setup.",
+			"reasoning": "This task is moderately complex as it impacts the entire system's efficiency and user experience. It requires focused subtasks to tackle different layers of optimization (database, frontend, caching) and ensure performance metrics are met."
+		},
+		{
+			"taskId": 15,
+			"taskTitle": "Testing, Documentation & Deployment",
+			"complexityScore": 9,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose the Testing, Documentation & Deployment task into subtasks covering comprehensive test suite development, user documentation creation, deployment pipeline setup, monitoring and alerting configuration, production readiness validation, and launch strategy planning.",
+			"reasoning": "This task is highly complex due to its critical role in ensuring system reliability and user adoption. It spans multiple areas (testing, documentation, deployment) and requires several subtasks to manage the breadth of activities and ensure a successful rollout."
+		}
+	]
+}

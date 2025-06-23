@@ -36,10 +36,13 @@ cd SNOW_Output
 2. **Start development environment**
 ```bash
 # Start all services in development mode
-docker-compose -f docker-compose.dev.yml up -d
+docker compose -f docker-compose.dev.yml up --build
+
+# Start in background (detached mode)
+docker compose -f docker-compose.dev.yml up --build -d
 
 # View logs
-docker-compose -f docker-compose.dev.yml logs -f
+docker compose -f docker-compose.dev.yml logs -f
 ```
 
 3. **Access the application**
@@ -52,10 +55,10 @@ docker-compose -f docker-compose.dev.yml logs -f
 
 ```bash
 # Build and start production containers
-docker-compose up -d
+docker compose up --build -d
 
 # Scale services if needed
-docker-compose up -d --scale app=3
+docker compose up -d --scale app=3
 ```## 🛠️ Development Workflow
 
 ### Working Inside Containers
@@ -65,38 +68,69 @@ docker-compose up -d --scale app=3
 #### Backend Development
 ```bash
 # Execute commands inside the backend container
-docker-compose -f docker-compose.dev.yml exec backend bash
+docker compose -f docker-compose.dev.yml exec backend bash
 
 # Run database migrations
-docker-compose -f docker-compose.dev.yml exec backend npm run db:migrate
+docker compose -f docker-compose.dev.yml exec backend npm run db:migrate
 
 # Run tests
-docker-compose -f docker-compose.dev.yml exec backend npm test
+docker compose -f docker-compose.dev.yml exec backend npm test
 
-# Install new packages
-docker-compose -f docker-compose.dev.yml exec backend npm install <package-name>
+# Install new packages (remember to rebuild after)
+docker compose -f docker-compose.dev.yml exec backend npm install <package-name>
+docker compose -f docker-compose.dev.yml up --build -d
 ```
 
 #### Frontend Development
 ```bash
 # Execute commands inside the frontend container
-docker-compose -f docker-compose.dev.yml exec frontend sh
+docker compose -f docker-compose.dev.yml exec frontend sh
 
-# Install new packages
-docker-compose -f docker-compose.dev.yml exec frontend npm install <package-name>
+# Install new packages (remember to rebuild after)
+docker compose -f docker-compose.dev.yml exec frontend npm install <package-name>
+docker compose -f docker-compose.dev.yml up --build -d
 
 # Run linting
-docker-compose -f docker-compose.dev.yml exec frontend npm run lint
+docker compose -f docker-compose.dev.yml exec frontend npm run lint
 ```
 
 #### Database Operations
 ```bash
 # Connect to PostgreSQL
-docker-compose -f docker-compose.dev.yml exec postgres psql -U nsrg_user -d nsrg_db_dev
+docker compose -f docker-compose.dev.yml exec postgres psql -U nsrg_user -d nsrg_db_dev
 
 # Run database scripts
-docker-compose -f docker-compose.dev.yml exec backend node scripts/migrate.js
+docker compose -f docker-compose.dev.yml exec backend node scripts/migrate.js
+
+# Stop all services
+docker compose -f docker-compose.dev.yml down
+
+# Stop and remove volumes (⚠️ DANGER: This deletes all data!)
+docker compose -f docker-compose.dev.yml down -v
 ```
+
+### Troubleshooting
+
+#### Common Issues
+
+**🔧 "ContainerConfig" KeyError**
+- **Solution**: Use `docker compose` (with space) instead of `docker-compose` (with hyphen)
+- **Why**: Docker Compose V2 is required for compatibility with modern Docker versions
+
+**🔧 Port Already in Use**
+- **Check what's using the port**: `sudo lsof -ti:3000`
+- **Kill the process**: `sudo kill -9 <PID>`
+- **Alternative**: Change port in docker-compose.dev.yml
+
+**🔧 Database Connection Issues**
+- **Check container status**: `docker compose -f docker-compose.dev.yml ps`
+- **View logs**: `docker compose -f docker-compose.dev.yml logs postgres`
+- **Reset database**: `docker compose -f docker-compose.dev.yml down -v && docker compose -f docker-compose.dev.yml up --build`
+
+**🔧 Hot-Reloading Not Working**
+- **Restart containers**: `docker compose -f docker-compose.dev.yml restart`
+- **Check volume mounts**: Ensure source code is properly mounted
+- **View backend logs**: `docker compose -f docker-compose.dev.yml logs backend`
 
 ### Project Structure
 

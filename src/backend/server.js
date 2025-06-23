@@ -15,6 +15,8 @@ const vlanRoutes = require('./routes/vlans');
 const wirelessRoutes = require('./routes/wireless');
 const ssidManagementRoutes = require('./routes/ssid-management');
 const securityProfileRoutes = require('./routes/security-profiles');
+const vlanMappingRoutes = require('./routes/vlan-mapping');
+const coveragePlanningRoutes = require('./routes/coverage-planning');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -60,7 +62,9 @@ app.get('/api/status', (req, res) => {
       vlans: '/api/vlans',
       wireless: '/api/wireless',
       ssidManagement: '/api/ssid-management',
-      securityProfiles: '/api/security-profiles'
+      securityProfiles: '/api/security-profiles',
+      vlanMapping: '/api/vlan-mapping',
+      coveragePlanning: '/api/coverage-planning'
     }
   });
 });
@@ -76,6 +80,8 @@ app.use('/api/vlans', vlanRoutes);
 app.use('/api/wireless', wirelessRoutes);
 app.use('/api/ssid-management', ssidManagementRoutes);
 app.use('/api/security-profiles', securityProfileRoutes);
+app.use('/api/vlan-mapping', vlanMappingRoutes);
+app.use('/api/coverage-planning', coveragePlanningRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

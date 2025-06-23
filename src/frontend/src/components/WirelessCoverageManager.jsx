@@ -230,7 +230,7 @@ const WirelessCoverageManager = ({ onBack }) => {
     
     try {
       // Validate form using the API validation
-      const validation = wirelessApi.validateCoverageArea(coverageForm);
+      const validation = await wirelessApi.validateCoverageArea(coverageForm);
       if (!validation.isValid) {
         setErrors(validation.errors);
         setIsLoading(false);
@@ -278,7 +278,7 @@ const WirelessCoverageManager = ({ onBack }) => {
     
     try {
       // Validate form using the API validation
-      const validation = wirelessApi.validateBandwidthPolicy(policyForm);
+      const validation = await wirelessApi.validateBandwidthPolicy(policyForm);
       if (!validation.isValid) {
         setErrors(validation.errors);
         setIsLoading(false);
@@ -335,6 +335,15 @@ const WirelessCoverageManager = ({ onBack }) => {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="flex items-center space-x-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back</span>
+            </button>
+          )}
           <Wifi className="w-8 h-8 text-blue-600" />
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Wireless Coverage Manager</h2>
@@ -343,7 +352,7 @@ const WirelessCoverageManager = ({ onBack }) => {
         </div>
         <div className="flex space-x-2">
           <button
-            onClick={() => window.location.reload()}
+            onClick={loadInitialData}
             className="flex items-center space-x-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
           >
             <RefreshCw className="w-4 h-4" />

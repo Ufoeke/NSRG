@@ -17,6 +17,11 @@
     "lint:fix": "eslint src/ --fix",
     "db:migrate": "node scripts/migrate.js",
     "db:seed": "node scripts/seed.js",
+    "docker:dev": "docker compose -f docker-compose.dev.yml up --build",
+    "docker:dev:detached": "docker compose -f docker-compose.dev.yml up --build -d",
+    "docker:dev:down": "docker compose -f docker-compose.dev.yml down",
+    "docker:dev:logs": "docker compose -f docker-compose.dev.yml logs -f",
+    "docker:prod": "docker compose up --build -d",
     "docker:build": "docker build -t nsrg .",
     "docker:run": "docker run -p 3000:3000 -p 5000:5000 nsrg"
   },
