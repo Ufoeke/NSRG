@@ -1,0 +1,538 @@
+# 🌐 **Multi-Service Network Request Management Platform - PRD**
+
+## 📋 **Product Overview**
+
+**Product Name**: Network Service Request Generator (NSRG)  
+**Current System**: Firewall-only ServiceNow output generator  
+**Target System**: Complete multi-service network request management platform  
+**Primary Goal**: Eliminate manual work and improve consistency in ServiceNow ticket generation for all network services
+
+---
+
+## 🎯 **Vision & Objectives**
+
+### **Vision Statement**
+Transform network service request generation from a manual, error-prone process into an intelligent, automated platform that supports all network services (firewalls, VLANs, switches, wireless, etc.) while maintaining complete audit trails and enabling rapid ticket generation for ServiceNow.
+
+### **Primary Objectives**
+1. **Eliminate Repetitive Manual Work**: Auto-suggest and reuse previously entered data
+2. **Ensure Consistency**: Standardized outputs across all team members and services
+3. **Improve Speed**: Reduce ticket generation time by 70%+
+4. **Enable Scalability**: Easy addition of new network services and vendors
+5. **Maintain Audit Trail**: Complete history and searchability of all requests
+
+---
+
+## 👥 **Target Users**
+
+### **Primary Users**
+- **Senior Network Engineers**: Creating complex multi-service requests
+- **Network Operations Team**: Daily firewall rule and VLAN requests
+- **Service Desk Engineers**: Quick standard request generation
+
+### **User Personas**
+1. **"Efficiency Expert" (Senior Engineer)**: Wants quick access to complex configurations with minimal typing
+2. **"Consistency Keeper" (Team Lead)**: Needs standardized outputs and audit trails
+3. **"Speed Demon" (Operations)**: Requires fastest possible ticket generation for common requests
+
+---
+
+## 🚀 **Core User Journeys**
+
+### **Journey 1: Quick Add (Primary Workflow)**
+1. **Landing Page**: User sees "Quick Add" prominent button
+2. **Customer Selection**: Dropdown/search with autocomplete from customer database
+3. **Service Selection**: Choose service type (Firewall, VLAN, Wireless, etc.)
+4. **Dynamic Form**: Service-specific form appears with intelligent suggestions
+5. **Real-time Preview**: ServiceNow output preview updates as user types
+6. **Generate & Copy**: One-click copy to clipboard with automatic save to history
+
+### **Journey 2: Advanced Management**
+1. **Service Management**: Full CRUD operations for each service type
+2. **Batch Operations**: Apply same configuration to multiple devices
+3. **Template Management**: Save and reuse common configurations
+4. **History Review**: Search and modify previous requests
+
+### **Journey 3: Search & Reuse**
+1. **Universal Search**: Search across all services, customers, devices
+2. **Copy & Modify**: Clone existing requests with modifications
+3. **Template Creation**: Convert frequent requests into reusable templates
+
+---
+
+## 🏗️ **System Architecture**
+
+### **Frontend Architecture**
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Landing Dashboard                        │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │ Quick Add   │  │ History     │  │ Search      │        │
+│  │   Button    │  │   Portal    │  │  Everything │        │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                Service Selection Layer                      │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐      │
+│  │Firewalls │ │VLAN/LAN  │ │Wireless  │ │[Future]  │      │
+│  │Manager   │ │Manager   │ │Manager   │ │Services  │      │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘      │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│            Intelligent Input Engine                        │
+│  • Smart Autocomplete    • Data Persistence               │
+│  • Suggestion Engine     • Template Management            │
+│  • Validation Engine     • ServiceNow Output Generator    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### **Data Architecture**
+```
+Customer Database
+├── Customer Information
+├── Associated Devices
+└── Service History
+
+Service Managers
+├── Firewall Service
+│   ├── Devices (FortiGate, Cisco FMC, Meraki)
+│   ├── Rules & Policies
+│   └── Service Groups
+├── VLAN/LAN Service
+│   ├── Switches
+│   ├── VLAN Configurations
+│   └── Port Assignments
+├── Wireless Service
+│   ├── Access Points
+│   ├── SSIDs
+│   └── Security Policies
+└── [Extensible for future services]
+
+Intelligence Engine
+├── Input History Database
+├── Suggestion Algorithms
+├── Template Storage
+└── Search Index
+```
+
+---
+
+## 📋 **Detailed Feature Requirements**
+
+### **1. Universal Landing Dashboard**
+
+#### **Quick Add Widget**
+- **Large, prominent "Quick Add" button** on landing page
+- **Customer dropdown** with smart search and autocomplete
+- **Recent customers** quick-select buttons
+- **Service type selection** with icons and descriptions
+
+#### **Dashboard Overview**
+- **Recent requests** (last 10) with quick actions
+- **Popular templates** for common requests
+- **Statistics** (requests today, this week, total)
+- **Quick search bar** for universal search
+
+### **2. Enhanced Customer Management**
+
+#### **Customer Selection Engine**
+- **Smart search**: Search by name, abbreviation, or code
+- **Autocomplete**: Real-time suggestions as user types
+- **Recent history**: Show recently used customers first
+- **Quick add customer**: Inline customer creation if not found
+
+#### **Customer Context**
+- **Device inventory**: Show all devices associated with customer
+- **Service history**: Previous requests for this customer
+- **Templates**: Customer-specific templates
+- **Preferred configurations**: Auto-load common settings
+
+### **3. Multi-Service Architecture**
+
+#### **A. Firewall Service (Enhanced Current System)**
+
+**Supported Vendors**:
+- FortiGate/FortiManager
+- Cisco FMC (Firepower Management Center)
+- Cisco ASA
+- Meraki MX Series
+- Palo Alto Networks
+
+**Key Features**:
+- **Intelligent rule suggestions** based on history
+- **Port/service autocomplete** with common services database
+- **Source/destination IP suggestions** from previous configurations
+- **Batch firewall selection** for identical rules
+- **Rule conflict detection** and warnings
+- **Security policy templates** (DMZ access, internal routing, etc.)
+
+**ServiceNow Output Templates**:
+```
+Standard Rule Request:
+- Customer: [Auto-filled]
+- Firewall(s): [Multi-select with batch option]
+- Change Request: [Auto-generated or manual]
+- Rule Type: [Allow/Deny/Log]
+- Source Zone/Interface: [Smart suggestions]
+- Destination Zone/Interface: [Smart suggestions]
+- Source IP/Network: [History-based autocomplete]
+- Destination IP/Network: [History-based autocomplete]
+- Services/Ports: [Service group suggestions]
+- Justification: [Template-based with customization]
+- Implementation Notes: [Auto-generated from selections]
+```
+
+#### **B. VLAN/LAN Service (New)**
+
+**Use Cases**:
+- New VLAN creation requests
+- VLAN modification/extension
+- Switch port assignments
+- Inter-VLAN routing requests
+
+**Supported Equipment**:
+- Cisco Catalyst switches
+- Meraki MS Series
+- FortiSwitch
+- HPE/Aruba switches
+
+**Key Features**:
+- **VLAN ID suggestions** (next available, customer-specific ranges)
+- **IP subnet calculator** with automatic subnet suggestions
+- **Switch port mapping** with visual port status
+- **VLAN naming conventions** enforcement
+- **Trunk/access port automation**
+
+**ServiceNow Output Template**:
+```
+VLAN Request:
+- Customer: [Auto-filled]
+- Switch(es): [Multi-select with location info]
+- VLAN ID: [Auto-suggest next available]
+- VLAN Name: [Convention-based suggestions]
+- IP Subnet: [Calculator with suggestions]
+- Port Assignment: [Port selector with status]
+- Trunk Requirements: [Auto-detect based on topology]
+- DHCP Requirements: [Template options]
+- Routing Requirements: [Inter-VLAN routing options]
+- Justification: [Business purpose templates]
+```
+
+#### **C. Wireless Service (New)**
+
+**Use Cases**:
+- New SSID creation
+- Access point deployments
+- Wireless security policy changes
+- Guest network requests
+
+**Supported Equipment**:
+- Cisco Meraki MR Series
+- FortiAP
+- Cisco Catalyst WiFi
+- Aruba Access Points
+
+**Key Features**:
+- **SSID naming conventions** with auto-suggestions
+- **Security profile templates** (WPA2/WPA3, Enterprise, Guest)
+- **VLAN mapping** integration with LAN service
+- **Coverage area planning** with AP selection
+- **Bandwidth policy templates**
+
+**ServiceNow Output Template**:
+```
+Wireless Request:
+- Customer: [Auto-filled]
+- Location/Building: [Location database integration]
+- SSID Name: [Convention-based naming]
+- Security Type: [Template selection]
+- VLAN Assignment: [Integration with VLAN service]
+- Access Points: [Location-based selection]
+- User Authentication: [RADIUS/Local/Guest options]
+- Bandwidth Limits: [Policy templates]
+- Guest Access: [Duration and restriction templates]
+```
+
+### **4. Intelligent Input Engine**
+
+#### **Smart Autocomplete System**
+- **Multi-field learning**: Remember combinations (IP + Port + Service)
+- **Context-aware suggestions**: Different suggestions based on service type
+- **Frequency-based ordering**: Most used suggestions appear first
+- **Fuzzy matching**: Handle typos and partial entries
+- **Cross-service learning**: Use firewall IPs for VLAN suggestions
+
+#### **Data Persistence & Learning**
+- **Input pattern recognition**: Learn from user behavior
+- **Template auto-creation**: Suggest templates from repeated patterns
+- **Validation integration**: Remember valid configurations
+- **Team sharing**: Share learned patterns across team members
+
+#### **Real-time Validation**
+- **IP address validation**: CIDR notation, ranges, conflicts
+- **Port/protocol validation**: Valid combinations, well-known services
+- **Device capability checking**: Ensure requested features are supported
+- **Policy compliance**: Check against security standards
+
+### **5. Advanced Search & History**
+
+#### **Universal Search Engine**
+**Search Capabilities**:
+- **Customer name/code**
+- **Device names/IPs**
+- **Change request numbers**
+- **Service types**
+- **Port numbers/services**
+- **Date ranges**
+- **Created by user**
+- **Full-text search** in descriptions/justifications
+
+**Search Interface**:
+- **Instant search** with real-time results
+- **Advanced filters** with multiple criteria
+- **Saved searches** for common queries
+- **Search history** and suggestions
+- **Export search results** to CSV/JSON
+
+#### **Request History Management**
+- **Complete audit trail** of all requests
+- **Version history** for modified requests
+- **User attribution** and timestamps
+- **Request status tracking** (draft, submitted, implemented)
+- **Batch operation history**
+
+### **6. Copy & Template System**
+
+#### **Request Duplication**
+- **One-click copy** with selective field modification
+- **Bulk copy** to multiple customers/devices
+- **Template creation** from existing requests
+- **Inheritance system** for similar configurations
+
+#### **Template Management**
+- **Personal templates** for individual users
+- **Team templates** shared across organization
+- **Template categories** by service type and complexity
+- **Template versioning** and approval workflow
+- **Template usage statistics** and optimization
+
+### **7. ServiceNow Output Engine**
+
+#### **Dynamic Output Generation**
+- **Real-time preview** of ServiceNow ticket content
+- **Template customization** per service type
+- **Field mapping** to ServiceNow forms
+- **Auto-formatting** with proper numbering and structure
+- **Change request integration** with auto-generated CR numbers
+
+#### **Output Formats**
+- **Standard ticket format** for ServiceNow paste
+- **Email format** for direct sending
+- **Documentation format** for change logs
+- **API format** for future ServiceNow integration
+
+---
+
+## 🎨 **User Interface Requirements**
+
+### **Design Principles**
+1. **Mobile-first responsive design**
+2. **Minimal clicks to complete tasks**
+3. **Progressive disclosure** of advanced features
+4. **Consistent visual language** across all services
+5. **Accessibility compliance** (WCAG 2.1)
+
+### **Key UI Components**
+
+#### **Landing Page**
+- **Hero section** with Quick Add button
+- **Service tiles** with visual icons
+- **Recent activity stream**
+- **Search bar** prominently placed
+
+#### **Quick Add Modal**
+- **Progressive form** that expands based on selections
+- **Real-time preview pane** showing ServiceNow output
+- **Smart suggestions** floating near relevant fields
+- **Copy to clipboard** with success confirmation
+
+#### **Advanced Management Pages**
+- **Tabbed interface** for different services
+- **Data tables** with advanced filtering
+- **Bulk operation tools**
+- **Import/export functionality**
+
+### **Mobile Experience**
+- **Touch-optimized** input controls
+- **Swipe gestures** for navigation
+- **Offline capability** for form completion
+- **Voice input** for common fields
+
+---
+
+## 🔧 **Technical Requirements**
+
+### **Performance Requirements**
+- **Page load time**: < 2 seconds
+- **Search response time**: < 500ms
+- **Autocomplete response**: < 200ms
+- **Support for 1000+ concurrent users**
+- **99.9% uptime** during business hours
+
+### **Data Requirements**
+- **Customer data**: 500+ customers with full history
+- **Device inventory**: 10,000+ network devices
+- **Request history**: 100,000+ historical requests
+- **Real-time data sync** across all modules
+
+### **Security Requirements**
+- **Role-based access control** with customer data isolation
+- **Audit logging** for all actions
+- **Data encryption** at rest and in transit
+- **SSO integration** with corporate identity systems
+- **API security** for future integrations
+
+### **Integration Requirements**
+- **ServiceNow API** integration (future phase)
+- **Network monitoring tools** integration
+- **CMDB integration** for device information
+- **Email/notification systems** integration
+
+---
+
+## 📊 **Success Metrics**
+
+### **Efficiency Metrics**
+- **Time to generate ticket**: Target < 2 minutes (down from 15-20 minutes)
+- **Reuse rate**: 60%+ of requests use auto-suggestions
+- **Template usage**: 40%+ of requests use templates
+- **Error reduction**: 80% reduction in ticket corrections
+
+### **Adoption Metrics**
+- **Daily active users**: 95%+ of network team
+- **Feature utilization**: All services used within 6 months
+- **User satisfaction**: 8.5/10 satisfaction score
+- **Training time**: < 30 minutes for new users
+
+### **Business Metrics**
+- **Customer satisfaction**: Improved due to consistent, detailed tickets
+- **Team productivity**: 70% improvement in request processing
+- **Documentation quality**: Standardized, complete information
+- **Audit compliance**: 100% trackable request history
+
+---
+
+## 🛣️ **Implementation Roadmap**
+
+### **Phase 1: Foundation (Months 1-2)**
+- Migrate current firewall system to new architecture
+- Implement universal customer management
+- Build Quick Add workflow for firewalls
+- Enhanced search and history functionality
+
+### **Phase 2: Intelligence (Months 2-3)**
+- Smart autocomplete engine implementation
+- Template system development
+- Copy/modify functionality
+- Advanced search capabilities
+
+### **Phase 3: Multi-Service (Months 3-4)**
+- VLAN/LAN service implementation
+- Wireless service development
+- Cross-service data integration
+- Batch operations enhancement
+
+### **Phase 4: Advanced Features (Months 4-5)**
+- Mobile application development
+- Advanced analytics and reporting
+- API development for future integrations
+- Performance optimization
+
+### **Phase 5: Integration & Polish (Months 5-6)**
+- ServiceNow API integration
+- CMDB integration
+- Advanced security features
+- User training and documentation
+
+---
+
+## 🔮 **Future Enhancements**
+
+### **Service Expansions**
+- **Load Balancer Management** (F5, Citrix NetScaler)
+- **VPN Services** (SSL VPN, Site-to-Site VPN)
+- **Network Monitoring** (SNMP, NetFlow configurations)
+- **Cloud Network Services** (AWS, Azure, GCP networking)
+- **SD-WAN Management** (Cisco SD-WAN, VMware VeloCloud)
+
+### **Advanced Intelligence**
+- **AI-powered suggestions** based on network topology
+- **Automatic conflict detection** across all services
+- **Predictive analytics** for resource planning
+- **Natural language processing** for voice input
+- **Machine learning** for optimal configuration suggestions
+
+### **Enterprise Features**
+- **Multi-tenant architecture** for MSP usage
+- **Advanced reporting** and analytics dashboard
+- **Workflow automation** with approval processes
+- **Integration marketplace** for third-party tools
+- **Advanced compliance** and governance features
+
+---
+
+## 📋 **Acceptance Criteria**
+
+### **Functional Criteria**
+- ✅ All current firewall functionality preserved and enhanced
+- ✅ VLAN service fully functional with switch integration
+- ✅ Universal search returns results in < 500ms
+- ✅ Quick Add workflow completes in < 3 clicks
+- ✅ 90%+ accuracy in autocomplete suggestions
+- ✅ Template system supports all service types
+
+### **Non-Functional Criteria**
+- ✅ Mobile responsive on all major devices
+- ✅ Handles 1000+ concurrent users without degradation
+- ✅ 99.9% uptime during business hours
+- ✅ WCAG 2.1 accessibility compliance
+- ✅ Complete audit trail for all operations
+- ✅ Data backup and recovery procedures tested
+
+### **User Experience Criteria**
+- ✅ New user can generate first ticket within 10 minutes
+- ✅ Expert user can generate complex ticket in < 2 minutes
+- ✅ User satisfaction score > 8.5/10
+- ✅ 95%+ team adoption within 3 months
+- ✅ Zero critical user-reported bugs in production
+
+---
+
+## 💰 **Resource Requirements**
+
+### **Development Team**
+- **Full-stack Developer**: 1 FTE for 6 months
+- **Frontend Specialist**: 0.5 FTE for 4 months
+- **Database/Backend Engineer**: 0.5 FTE for 3 months
+- **UX/UI Designer**: 0.3 FTE for 2 months
+- **Project Manager/Product Owner**: 0.2 FTE for 6 months
+
+### **Infrastructure**
+- **Development Environment**: Enhanced development setup
+- **Testing Environment**: Staging environment with production data
+- **Production Infrastructure**: High-availability deployment
+- **Monitoring & Logging**: Application performance monitoring
+
+### **Training & Adoption**
+- **User Training**: 2-day workshop for all team members
+- **Documentation**: Comprehensive user guides and video tutorials
+- **Support Period**: 3-month intensive support during rollout
+- **Change Management**: Process updates and team adoption support
+
+---
+
+*This PRD represents a complete transformation from a single-purpose firewall tool to a comprehensive network service request management platform, designed to eliminate manual work and significantly improve team efficiency while maintaining the flexibility to add future services.*

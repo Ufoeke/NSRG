@@ -1,0 +1,43 @@
+# Task ID: 5
+# Title: VLAN/LAN Service Module
+# Status: pending
+# Dependencies: 2, 3
+# Priority: medium
+# Description: Create new VLAN/LAN management module supporting multiple switch vendors and automated subnet suggestions.
+# Details:
+Implement VLAN service supporting Cisco Catalyst, Meraki MS, FortiSwitch, and HPE/Aruba switches. Include VLAN ID suggestions, IP subnet calculator, switch port mapping, VLAN naming conventions, and trunk/access port automation.
+
+# Test Strategy:
+Verify VLAN creation workflows, subnet calculations are accurate, port mappings work correctly, and naming conventions are enforced.
+
+# Subtasks:
+## 1. Design VLAN/LAN Module Database Schema [pending]
+### Dependencies: None
+### Description: Create a database schema to store VLAN configurations, switch vendor details, subnet information, and port mappings for Cisco Catalyst, Meraki MS, FortiSwitch, and HPE/Aruba switches.
+### Details:
+Define tables for VLANs (ID, name, subnet), switches (vendor, model, IP), ports (switch ID, port number, mode), and subnet suggestions. Use PostgreSQL or MySQL with proper indexing for performance.
+
+## 2. Develop VLAN ID and Subnet Suggestion API [pending]
+### Dependencies: 5.1
+### Description: Build a RESTful API endpoint to suggest available VLAN IDs and calculate IP subnets based on existing configurations and network size requirements.
+### Details:
+Use Node.js/Express or Python/Flask to create an API that queries the database for used VLAN IDs and subnets, then applies logic to suggest non-overlapping values. Include input validation for network size and CIDR notation.
+
+## 3. Implement Switch Vendor Integration Layer [pending]
+### Dependencies: 5.1
+### Description: Develop a modular integration layer to communicate with Cisco Catalyst, Meraki MS, FortiSwitch, and HPE/Aruba switches via their respective APIs or CLI for VLAN configuration.
+### Details:
+Create a vendor-agnostic abstraction layer in Python or Go, with specific drivers for each switch type. Use REST APIs where available (e.g., Meraki) and SSH for CLI-based switches (e.g., FortiSwitch). Store credentials securely.
+
+## 4. Build VLAN Port Mapping and Automation UI [pending]
+### Dependencies: 5.2, 5.3
+### Description: Create a React-based user interface for mapping switch ports to VLANs, setting trunk/access modes, and automating configurations with naming conventions.
+### Details:
+Design a component with a table or drag-and-drop interface for port assignments. Integrate with the backend API to fetch switch and VLAN data. Include form validation for naming conventions and mode selection.
+
+## 5. Implement Configuration Deployment and Validation [pending]
+### Dependencies: 5.3, 5.4
+### Description: Develop a backend service to deploy VLAN configurations to switches and validate the applied settings against the intended design.
+### Details:
+Create a deployment script in Python or Go that uses the integration layer to push configurations. Add a validation step to query switch state post-deployment and compare against database records. Log all actions for auditing.
+

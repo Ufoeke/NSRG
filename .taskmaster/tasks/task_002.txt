@@ -1,0 +1,43 @@
+# Task ID: 2
+# Title: Universal Landing Dashboard
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Create the main dashboard interface with Quick Add functionality, recent activity display, and navigation to all service modules.
+# Details:
+Implement the primary user interface featuring a prominent Quick Add button, service tiles for different network services, recent requests display, universal search bar, and statistics dashboard. Must be mobile-responsive and follow modern UI/UX principles.
+
+# Test Strategy:
+Test dashboard loads quickly (<2s), all navigation works, Quick Add button launches proper workflow, and interface is responsive across devices.
+
+# Subtasks:
+## 1. Design Dashboard Layout and Wireframe [pending]
+### Dependencies: None
+### Description: Create a responsive wireframe for the Universal Landing Dashboard using modern UI/UX principles, focusing on layout for Quick Add button, service tiles, recent activity, search bar, and statistics display.
+### Details:
+Use tools like Figma or Sketch to design mobile-first layouts. Ensure accessibility standards (WCAG 2.1) are considered. Define grid structure for desktop and mobile views.
+
+## 2. Implement Frontend Dashboard Skeleton [pending]
+### Dependencies: 2.1
+### Description: Build the static HTML/CSS structure of the dashboard based on the approved wireframe, ensuring mobile responsiveness with a framework like Bootstrap or Tailwind CSS.
+### Details:
+Focus on creating placeholders for Quick Add button, service tiles, recent activity section, search bar, and statistics widgets. Use CSS Grid or Flexbox for layout adaptability.
+
+## 3. Develop Quick Add Functionality [pending]
+### Dependencies: 2.2
+### Description: Implement the Quick Add button with a modal or form for rapid request creation, integrating basic frontend validation and UI feedback.
+### Details:
+Use JavaScript (React/Vue if applicable) to handle modal opening/closing and form submission. Mock API calls with static data for now. Ensure form fields align with common request types.
+
+## 4. Integrate Recent Activity and Service Tiles [pending]
+### Dependencies: 2.2
+### Description: Add dynamic components for displaying recent activity and clickable service tiles, pulling mock data to simulate API responses for network services.
+### Details:
+Create reusable components for tiles and activity logs. Use placeholder data to render lists and ensure proper styling for hover states and click interactions. Plan for future API integration.
+
+## 5. Add Universal Search and Statistics Widgets [pending]
+### Dependencies: 2.2
+### Description: Implement a functional search bar with basic filtering logic and static statistics widgets for key metrics display on the dashboard.
+### Details:
+Develop search bar with JavaScript to filter mock data (e.g., recent requests). Create static widgets for stats like 'Total Requests' or 'Pending Items' with placeholder numbers. Ensure responsive design.
+

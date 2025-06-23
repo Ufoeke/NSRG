@@ -1,0 +1,99 @@
+{
+  "templates": [
+    {
+      "id": "corporate-standard",
+      "name": "Corporate Standard SSID",
+      "description": "Standard corporate SSID with department and location variables",
+      "pattern": "{department}-{location}-CORP",
+      "securityProfile": "wpa3_enterprise",
+      "variables": {
+        "department": {
+          "type": "string",
+          "required": true,
+          "maxLength": 8,
+          "pattern": "^[A-Z]{2,8}$",
+          "description": "Department code (2-8 uppercase letters)",
+          "examples": ["IT", "HR", "FINANCE", "OPS"]
+        },
+        "location": {
+          "type": "string", 
+          "required": true,
+          "maxLength": 6,
+          "pattern": "^[A-Z0-9]{2,6}$",
+          "description": "Location code (2-6 alphanumeric characters)",
+          "examples": ["NYC", "LA", "CHI", "ATL"]
+        }
+      },
+      "vlanMapping": {
+        "dynamic": true,
+        "vlanPattern": "{department}_VLAN"
+      },
+      "bandwidthPolicy": {
+        "enabled": true,
+        "uploadLimit": "100Mbps",
+        "downloadLimit": "100Mbps"
+      }
+    },
+    {
+      "id": "guest-access",
+      "name": "Guest Access SSID",
+      "description": "Guest network with optional location branding",
+      "pattern": "Guest-{location}",
+      "securityProfile": "wpa2_psk",
+      "variables": {
+        "location": {
+          "type": "string",
+          "required": false,
+          "default": "WiFi",
+          "maxLength": 10,
+          "pattern": "^[A-Za-z0-9-]{2,10}$",
+          "description": "Location identifier for guest network",
+          "examples": ["Lobby", "Conf", "Cafe", "WiFi"]
+        }
+      },
+      "vlanMapping": {
+        "vlanId": 100,
+        "static": true
+      },
+      "bandwidthPolicy": {
+        "enabled": true,
+        "uploadLimit": "10Mbps",
+        "downloadLimit": "25Mbps"
+      }
+    },
+    {
+      "id": "iot-devices",
+      "name": "IoT Device Network",
+      "description": "Dedicated network for IoT devices with zone segregation",
+      "pattern": "IoT-{zone}-{deviceType}",
+      "securityProfile": "wpa2_psk",
+      "variables": {
+        "zone": {
+          "type": "string",
+          "required": true,
+          "maxLength": 6,
+          "pattern": "^[A-Z]{2,6}$",
+          "description": "Physical zone identifier",
+          "examples": ["FLOOR1", "FLOOR2", "BLDGA", "BLDGB"]
+        },
+        "deviceType": {
+          "type": "string",
+          "required": true,
+          "maxLength": 8,
+          "pattern": "^[A-Z]{2,8}$",
+          "description": "Device type category",
+          "examples": ["CAMERA", "SENSOR", "BADGE", "PRINTER"]
+        }
+      },
+      "vlanMapping": {
+        "dynamic": true,
+        "vlanPattern": "IOT_{zone}_{deviceType}"
+      },
+      "bandwidthPolicy": {
+        "enabled": true,
+        "uploadLimit": "5Mbps",
+        "downloadLimit": "5Mbps"
+      }
+    }
+  ]
+}

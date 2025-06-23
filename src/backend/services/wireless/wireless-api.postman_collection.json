@@ -1,0 +1,688 @@
+{
+  "info": {
+    "name": "Wireless Service API",
+    "description": "Comprehensive API collection for testing wireless service endpoints including SSID management, access point deployment, and security policy configuration.",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/wireless",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "{{jwt_token}}",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "{{api_key}}",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "SSID Management",
+      "description": "Endpoints for managing wireless SSIDs",
+      "item": [
+        {
+          "name": "List All SSIDs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ssids?limit=20&offset=0",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids"],
+              "query": [
+                {
+                  "key": "vendor",
+                  "value": "cisco-meraki",
+                  "disabled": true
+                },
+                {
+                  "key": "enabled",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create New SSID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test-Corporate-WiFi\",\n  \"enabled\": true,\n  \"securityProfileId\": \"sec-prof-001\",\n  \"vlanId\": 100,\n  \"bandwidthPolicyId\": \"bw-pol-001\",\n  \"accessPoints\": [\"ap-001\", \"ap-002\"],\n  \"description\": \"Test corporate network for development\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ssids",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get SSID Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ssids/ssid-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids", "ssid-001"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update SSID",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated-Corporate-WiFi\",\n  \"enabled\": false,\n  \"description\": \"Updated corporate network configuration\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ssids/ssid-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids", "ssid-001"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete SSID",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ssids/ssid-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids", "ssid-001"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bulk SSID Operations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"operation\": \"create\",\n  \"ssids\": [\n    {\n      \"name\": \"Bulk-SSID-1\",\n      \"securityProfileId\": \"sec-prof-001\",\n      \"vlanId\": 101,\n      \"description\": \"First bulk SSID\"\n    },\n    {\n      \"name\": \"Bulk-SSID-2\",\n      \"securityProfileId\": \"sec-prof-002\",\n      \"vlanId\": 102,\n      \"description\": \"Second bulk SSID\"\n    }\n  ],\n  \"options\": {\n    \"continueOnError\": true,\n    \"validateOnly\": false\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ssids/bulk",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids", "bulk"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Access Point Management",
+      "description": "Endpoints for managing access points",
+      "item": [
+        {
+          "name": "List Access Points",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/access-points",
+              "host": ["{{baseUrl}}"],
+              "path": ["access-points"],
+              "query": [
+                {
+                  "key": "vendor",
+                  "value": "cisco-meraki",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "online",
+                  "disabled": true
+                },
+                {
+                  "key": "location",
+                  "value": "lobby",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Access Point",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test-AP-01\",\n  \"vendor\": \"cisco-meraki\",\n  \"model\": \"MR46\",\n  \"macAddress\": \"00:18:0a:99:88:77\",\n  \"serialNumber\": \"Q2HP-TEST-1234\",\n  \"ipAddress\": \"192.168.1.150\",\n  \"location\": {\n    \"building\": \"Test Building\",\n    \"floor\": \"1\",\n    \"room\": \"Test Lab\",\n    \"coordinates\": {\n      \"latitude\": 37.7749,\n      \"longitude\": -122.4194\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/access-points",
+              "host": ["{{baseUrl}}"],
+              "path": ["access-points"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Access Point Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/access-points/ap-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["access-points", "ap-001"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Access Point",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated-AP-01\",\n  \"ipAddress\": \"192.168.1.151\",\n  \"location\": {\n    \"building\": \"Updated Building\",\n    \"floor\": \"2\",\n    \"room\": \"Conference Room B\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/access-points/ap-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["access-points", "ap-001"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Security Profiles",
+      "description": "Endpoints for managing security profiles",
+      "item": [
+        {
+          "name": "List Security Profiles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/security-profiles",
+              "host": ["{{baseUrl}}"],
+              "path": ["security-profiles"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Security Profile - WPA2 Enterprise",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test-WPA2-Enterprise\",\n  \"authType\": \"wpa2_enterprise\",\n  \"encryption\": \"aes\",\n  \"radiusConfig\": {\n    \"primaryServer\": {\n      \"host\": \"192.168.1.20\",\n      \"port\": 1812,\n      \"secret\": \"radius-secret-123\"\n    },\n    \"secondaryServer\": {\n      \"host\": \"192.168.1.21\",\n      \"port\": 1812,\n      \"secret\": \"radius-secret-456\"\n    }\n  },\n  \"isTemplate\": true,\n  \"description\": \"Test WPA2 Enterprise profile with RADIUS\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/security-profiles",
+              "host": ["{{baseUrl}}"],
+              "path": ["security-profiles"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Security Profile - WPA3 PSK",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test-WPA3-PSK\",\n  \"authType\": \"wpa3_psk\",\n  \"encryption\": \"aes\",\n  \"passphrase\": \"SecurePassword123!\",\n  \"isTemplate\": true,\n  \"description\": \"Test WPA3 Personal profile\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/security-profiles",
+              "host": ["{{baseUrl}}"],
+              "path": ["security-profiles"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Security Profile - Guest Open",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test-Guest-Open\",\n  \"authType\": \"open\",\n  \"encryption\": \"none\",\n  \"isTemplate\": true,\n  \"description\": \"Test open guest network profile\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/security-profiles",
+              "host": ["{{baseUrl}}"],
+              "path": ["security-profiles"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Security Profile Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/security-profiles/sec-prof-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["security-profiles", "sec-prof-001"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Integration Tests",
+      "description": "End-to-end integration test scenarios",
+      "item": [
+        {
+          "name": "Complete SSID Deployment Workflow",
+          "description": "Test the complete workflow from security profile creation to SSID deployment",
+          "item": [
+            {
+              "name": "1. Create Security Profile",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Integration-Test-WPA2\",\n  \"authType\": \"wpa2_psk\",\n  \"encryption\": \"aes\",\n  \"passphrase\": \"IntegrationTest123!\",\n  \"description\": \"Security profile for integration testing\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/security-profiles",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["security-profiles"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2. Register Access Point",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Integration-Test-AP\",\n  \"vendor\": \"aruba\",\n  \"model\": \"AP-515\",\n  \"macAddress\": \"00:1a:1e:11:22:33\",\n  \"location\": {\n    \"building\": \"Test Lab\",\n    \"floor\": \"1\",\n    \"room\": \"Integration Lab\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/access-points",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["access-points"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "3. Create SSID with Security Profile",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Integration-Test-SSID\",\n  \"enabled\": true,\n  \"securityProfileId\": \"{{security_profile_id}}\",\n  \"vlanId\": 150,\n  \"accessPoints\": [\"{{access_point_id}}\"],\n  \"description\": \"SSID for integration testing\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ssids",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["ssids"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "4. Verify SSID Deployment",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ssids/{{ssid_id}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["ssids", "{{ssid_id}}"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Error Scenarios",
+      "description": "Test error handling and validation",
+      "item": [
+        {
+          "name": "Create SSID - Invalid Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Invalid SSID Name With Spaces!\",\n  \"securityProfileId\": \"sec-prof-001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ssids",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create SSID - Duplicate Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Corporate-WiFi\",\n  \"securityProfileId\": \"sec-prof-001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ssids",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create SSID - Non-existent Security Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test-Invalid-Security\",\n  \"securityProfileId\": \"non-existent-profile\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ssids",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Non-existent SSID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ssids/non-existent-ssid",
+              "host": ["{{baseUrl}}"],
+              "path": ["ssids", "non-existent-ssid"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register AP - Duplicate MAC Address",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Duplicate-MAC-AP\",\n  \"vendor\": \"cisco-meraki\",\n  \"model\": \"MR46\",\n  \"macAddress\": \"00:18:0a:12:34:56\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/access-points",
+              "host": ["{{baseUrl}}"],
+              "path": ["access-points"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Set up any pre-request logic here",
+          "// For example, generate timestamps or request IDs",
+          "pm.request.headers.add({",
+          "    key: 'X-Request-ID',",
+          "    value: pm.variables.replaceIn('{{$randomUUID}}'),",
+          "});",
+          "",
+          "// Set timestamp for request tracking",
+          "pm.environment.set('requestTimestamp', new Date().toISOString());"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Global test assertions",
+          "pm.test('Response time is acceptable', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+          "});",
+          "",
+          "pm.test('Response has proper headers', function () {",
+          "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+          "});",
+          "",
+          "// Store response data for use in subsequent requests",
+          "if (pm.response.code === 201 && pm.response.json().id) {",
+          "    const responseBody = pm.response.json();",
+          "    ",
+          "    // Store IDs based on request URL",
+          "    if (pm.request.url.toString().includes('/ssids')) {",
+          "        pm.environment.set('ssid_id', responseBody.id);",
+          "    } else if (pm.request.url.toString().includes('/access-points')) {",
+          "        pm.environment.set('access_point_id', responseBody.id);",
+          "    } else if (pm.request.url.toString().includes('/security-profiles')) {",
+          "        pm.environment.set('security_profile_id', responseBody.id);",
+          "    }",
+          "}"
+        ]
+      }
+    }
+  ]
+}

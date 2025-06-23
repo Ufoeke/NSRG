@@ -1,0 +1,36 @@
+FROM node:18-alpine
+
+# Install system dependencies for development
+RUN apk add --no-cache \
+    postgresql-client \
+    curl \
+    git \
+    && rm -rf /var/cache/apk/*
+
+# Create app directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies (including dev dependencies)
+RUN npm install
+
+# Copy source code
+COPY src/backend/ ./src/backend/
+COPY src/shared/ ./src/shared/
+COPY config/ ./config/
+COPY scripts/ ./scripts/
+
+# Create necessary directories
+RUN mkdir -p logs uploads temp
+
+# Expose development port
+EXPOSE 5000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:5000/health || exit 1
+
+# Start development server with nodemon
+CMD ["npx", "nodemon", "src/backend/server.js"]
